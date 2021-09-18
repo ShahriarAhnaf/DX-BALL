@@ -33,10 +33,6 @@ Game::Game( MainWindow& wnd )
 	std::uniform_int_distribution<int> yDist(0, 570);
 	poo0X = xDist(rng);
 	poo0Y = yDist(rng);
-	poo1X = xDist(rng);
-	poo1Y = yDist(rng);
-	poo2X = xDist(rng);
-	poo2Y = yDist(rng);
 }
 
 void Game::Go()
@@ -82,7 +78,7 @@ void Game::UpdateModel()
 		poo0X += poo0vx;
 		poo0Y += poo0vy;
 
-		{
+		{ // making sure poo does not break the game by going out
 			const int poo0Xold = poo0X;
 			const int poo0Yold = poo0Y;
 
@@ -103,8 +99,12 @@ void Game::UpdateModel()
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
 		{
 			//since the poo just collided with bar vertical momentum switches
-				poo0vy = -1*(poo0vy+2) ;
-			
+				poo0vy = -1*(poo0vy+1) ;
+		}
+
+		if (GoalLetIn(poo0Y, pooHeight))
+		{
+			poo0IsEaten = true;
 		}
 	}
 	else
@@ -28735,9 +28735,9 @@ int Game::ClampScreenY(int y, int height)
 	{
 		return 0;
 	}
-	else if(y > gfx.ScreenHeight) {
+	else if(bottom > gfx.ScreenHeight) {
 		poo0IsEaten = true;
-		return 0;
+		return y - 1;
 	}
 	else
 	{
@@ -28768,7 +28768,7 @@ void Game::ComposeFrame()
 	}
 	else
 	{
-		if (GoalLetIn(poo0Y, pooHeight))
+		if (poo0IsEaten)
 		{
 			DrawGameOver(358, 268);
 		}
