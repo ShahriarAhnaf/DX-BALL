@@ -102,9 +102,8 @@ void Game::UpdateModel()
 
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
 		{
-			poo0IsEaten = true;
 			//since the poo just collided with bar vertical momentum switches
-				poo0vy = -poo0vy;
+				poo0vy = -1*(poo0vy+2) ;
 			
 		}
 	}
