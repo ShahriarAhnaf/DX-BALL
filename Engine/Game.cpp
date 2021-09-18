@@ -67,14 +67,14 @@ void Game::UpdateModel()
 		{
 			dudeX -= 2;
 		}
-		if (wnd.kbd.KeyIsPressed(VK_DOWN))
+		/*if (wnd.kbd.KeyIsPressed(VK_DOWN))
 		{
 			dudeY += 2;
 		}
 		if (wnd.kbd.KeyIsPressed(VK_UP))
 		{
 			dudeY -= 2;
-		}
+		}*/
 
 		dudeX = ClampScreenX(dudeX, dudeWidth);
 		dudeY = ClampScreenY(dudeY, dudeHeight);
@@ -28735,9 +28735,9 @@ int Game::ClampScreenY(int y, int height)
 	{
 		return 0;
 	}
-	else if (bottom >= gfx.ScreenHeight)
-	{
-		return (gfx.ScreenHeight - 1) - height;
+	else if(y > gfx.ScreenHeight) {
+		poo0IsEaten = true;
+		return 0;
 	}
 	else
 	{
